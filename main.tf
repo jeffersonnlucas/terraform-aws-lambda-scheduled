@@ -1,12 +1,13 @@
 module "lambda_scheduler" {
   source        = "terraform-aws-modules/lambda/aws"
-  function_name = "my-lambda-scheduled"
-  description   = "My lambda function scheduled"
-  handler       = "index.lambda_handler"
-  runtime       = "python3.8"
+  function_name = var.function_name
+  description   = var.description
+  handler       = var.handler
+  runtime       = var.runtime
   publish = true
+  kms_key_arn = var.kms_key_arn
 
-  source_path = "../src/lambda/python-lambda-scheduled"
+  source_path = var.source_path
 
   allowed_triggers = {
     ScheduleLambdaRule = {
@@ -15,22 +16,19 @@ module "lambda_scheduler" {
     }
   }
 
-  tags = {
-    Name = "my-lambda-scheduled"
-  }
+  tags = var.tags
+
+  vpc_security_group_ids =  var.vpc_security_group_ids
+  vpc_subnet_ids         =  var.vpc_subnet_ids
 }
 
 resource "aws_cloudwatch_event_rule" "schedule" {
   name          = "LambdaScheduleEvent"
-  description   = "Lambda Function Schedule Event Trigger"
-  schedule_expression = "rate(1 minute)"
+  description   = format("Schedule Event Trigger %s", var.function_name)
+  schedule_expression = var.schedule_expression
 }
 
 resource "aws_cloudwatch_event_target" "schedule_lambda_function" {
   rule = aws_cloudwatch_event_rule.schedule.name
-  arn  = module.lambda.this_lambda_function_arn
-}
-
-output "lambda" {
-    value = module.lambda_scheduler
+  arn  = module.lambda_scheduler.this_lambda_function_arn
 }
