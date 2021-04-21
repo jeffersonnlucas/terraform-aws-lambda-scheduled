@@ -1,6 +1,6 @@
 # Terraform AWS Lambda Scheduled Module
 
-Terraform module to create resource [AWS Lambda](https://www.terraform.io/docs/providers/aws/r/lambda_function.html) using Cloud Watch Events scheduling. IAM Role configuration using [PoLP VPC](https://www.cyberark.com/what-is/least-privilege/).
+Terraform to create resource [AWS Lambda](https://www.terraform.io/docs/providers/aws/r/lambda_function.html) using Cloud Watch Events scheduling. IAM Role configuration using [PoLP VPC](https://www.cyberark.com/what-is/least-privilege/).
 
 Following the Documentation [Cloud Watch Events](https://docs.aws.amazon.com/pt_br/lambda/latest/dg/services-cloudwatchevents.html).
 
