@@ -1,11 +1,12 @@
 resource "aws_cloudwatch_event_rule" "lambda_rule" {
   count               = var.enable ? 1 : 0
+  name = "lambdaRule"
   schedule_expression = var.schedule_expression
 }
 
 resource "aws_cloudwatch_event_target" "lambda_target" {
   count = var.enable ? 1 : 0
-  rule  = aws_cloudwatch_event_rule.lambda_rule[count.index].arn
+  rule  = aws_cloudwatch_event_rule.lambda_rule[count.index].name
   arn   = var.lambda_arn
 }
 

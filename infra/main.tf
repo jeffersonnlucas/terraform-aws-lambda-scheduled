@@ -16,7 +16,7 @@ module "lambda" {
   handler       = "index.lambda_handler"
   runtime       = "python3.8"
 
-  local_existing_package = "../src"
+  source_path = "../src/lambda/python-lambda-scheduled"
 
   tags = {
     Name = "my-lambda-existing-package-local"
